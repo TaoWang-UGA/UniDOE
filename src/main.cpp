@@ -4,7 +4,7 @@
 #include <cmath>
 #include <algorithm>
 #include "doe_optimizer.h"
-
+#include <random>
 #include <Rcpp.h>
 #include <R.h>
 
@@ -43,7 +43,8 @@ NumericMatrix Generate_init_matrix(string init_method, int nsamp, int nv, int nl
     for(i=1;i<=nsamp;i++) col.push_back((i%nlevel)+1);
     for(i=0;i<nv;i++)
     {
-      random_shuffle (col.begin(), col.end());
+      std::shuffle(col.begin(), col.end(), std::mt19937{std::random_device{}()});
+
       for(j=0;j<nsamp;j++)  return_matrix(j,i) = col[j];
     }
   }

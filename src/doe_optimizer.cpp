@@ -3,7 +3,7 @@
 //
 
 #include "doe_optimizer.h"
-
+#include <random>
 vector<vector<double> > Optimizer::get_design()
 {
     return (best_design);
@@ -205,7 +205,8 @@ void Optimizer::get_pairs_element(int ncol)
     vector<int> ind(allparis, 0);
     for (i=0;i<allparis;i++) ind[i]=i+1;
 
-    random_shuffle(ind.begin(), ind.end());
+    std::shuffle(ind.begin(), ind.end(), std::mt19937{std::random_device{}()});
+
     for (i = 0, j = 0; (i < allparis) & (j < nelement_pairs[ncol]); i++) {
         tp = (int) (sqrt(ind[i] * 2));
         if ((ind[i] * 2) <= tp * (tp + 1)) {
@@ -245,7 +246,7 @@ void Optimizer::get_pairs_level(int ncol)
 
     vector<int> ind(allparis, 0);
     for (i=0;i<allparis;i++) ind[i]=i+1;
-    random_shuffle(ind.begin(), ind.end());
+    std::shuffle(ind.begin(), ind.end(), std::mt19937{std::random_device{}()});
 
     for (i = 0, j = 0; (i < allparis) & (j < nlevel_pairs[ncol]); i++) {
         tp = (int) (sqrt(ind[i] * 2));
